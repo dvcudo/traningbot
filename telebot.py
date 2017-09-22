@@ -18,12 +18,18 @@ def chat(bot, update):
 	logging.info(text)
 	update.message.reply_text(text)
 
+def word_count(bot, update):
+	text = update.message.text
+	count = len(text.split(' '))
+	logging.info("Пользователь ввел: {}" .format(text))
+	update.message.reply_text(count - 1)
 
 def main():
 	updater = Updater(settings.TELEGRAM_API_KEY)
 	
 	updater.dispatcher.add_handler(CommandHandler("start", start_bot))
 	updater.dispatcher.add_handler(MessageHandler(Filters.text, chat))
+	updater.dispatcher.add_handler(CommandHandler("wordcount", word_count))
 
 	updater.start_polling()
 	updater.idle()
